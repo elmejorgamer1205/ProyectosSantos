@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/hero_item.dart';
 import '../l10n/app_localizations.dart';
+import '../widgets/hero_stats.dart';
 // El detalle devuelve una intención; el catálogo es dueño de los favoritos.
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key, required this.hero, required this.favorite});
@@ -18,6 +19,7 @@ class DetailScreen extends StatelessWidget {
             Text(hero.description, style: Theme.of(context).textTheme.bodyLarge),
             const SizedBox(height: 12),
             // R1_DETAIL
+            HeroStats(power: hero.power, intelligence: hero.intelligence),
             const SizedBox(height: 12),
             FilledButton.icon(key: const ValueKey('detail-action'),
               onPressed: () => Navigator.pop(context, true),
