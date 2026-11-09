@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/hero_item.dart';
 import '../l10n/app_localizations.dart';
+import 'hero_stats.dart';
 // R1: incorpora un HeroStats reutilizable para mostrar poder e inteligencia.
 class HeroCard extends StatelessWidget {
   const HeroCard({super.key, required this.hero, required this.favorite,
@@ -19,6 +20,10 @@ class HeroCard extends StatelessWidget {
         Padding(padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
           child: Text(hero.name, style: Theme.of(context).textTheme.titleLarge)),
         // R1_WIDGET
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: HeroStats(power: hero.power, intelligence: hero.intelligence),
+        ),
         Padding(padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Wrap(alignment: WrapAlignment.spaceBetween,
             crossAxisAlignment: WrapCrossAlignment.center, children: [
