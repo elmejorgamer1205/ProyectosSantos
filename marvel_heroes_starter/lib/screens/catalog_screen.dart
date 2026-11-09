@@ -29,6 +29,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
     final changed = await Navigator.push<bool>(context, MaterialPageRoute(
       builder: (_) => DetailScreen(hero: hero, favorite: _favorites.contains(hero.id))));
     if (!mounted || changed != true) return;
+    await _changeFavorite(hero);
     // R3: aplicar la intención devuelta por el detalle.
   }
   @override
