@@ -88,7 +88,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
               // Android puede anunciar ancho cero durante el primer fotograma.
               if (constraints.maxWidth <= 16) return const SizedBox.shrink();
               // R5: una columna <600; dos >=600 píxeles lógicos.
-              final columns = 1;
+              final columns = constraints.maxWidth < 600 ? 1 : 2;
               return SingleChildScrollView(key: const ValueKey('catalog-scroll'),
                 padding: const EdgeInsets.all(8), child: Wrap(children: [
                   for (final hero in shown)
