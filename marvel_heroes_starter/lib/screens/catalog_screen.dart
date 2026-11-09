@@ -18,7 +18,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   bool _matches(HeroItem hero) {
     // R2: filtrar por nombre, ignorando mayúsculas y espacios exteriores.
     final consultaLimpia = _query.trim().toLowerCase();
-    return consultaLimpia.isEmpty || hero.name.isNotEmpty; // todavía no filtra
+    return consultaLimpia.isEmpty || hero.name.toLowerCase().contains(consultaLimpia); // todavía no filtra
   }
   Future<void> _changeFavorite(HeroItem hero) async {
     // R4: añadir sin duplicados; antes de quitar, pedir confirmación.
