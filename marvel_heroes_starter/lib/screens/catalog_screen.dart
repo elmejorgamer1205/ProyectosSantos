@@ -18,12 +18,42 @@ class _CatalogScreenState extends State<CatalogScreen> {
   bool _matches(HeroItem hero) {
     // R2: filtrar por nombre, ignorando mayúsculas y espacios exteriores.
     final consultaLimpia = _query.trim().toLowerCase();
-    return _query.isEmpty || hero.name.isNotEmpty; // todavía no filtra
+    return consultaLimpia.isEmpty || hero.name.isNotEmpty; // todavía no filtra
   }
   Future<void> _changeFavorite(HeroItem hero) async {
     // R4: añadir sin duplicados; antes de quitar, pedir confirmación.
     final t = AppLocalizations.of(context)!;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(t.pending)));
+    if(!_favorites.contains(hero.id)){
+      // Si no es favorito, lo añadimos directamente
+      setState(() {
+        _favorites.add(hero.id);
+      });
+      // Si ya es favorito, mostramos el diálogo de confirmación
+    } else{
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: Text(t.confirmTitle),
+          content: Text(t.confirmMessage),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(dialogContext, false), 
+                child: Text(t.cancel)
+            ),
+            TextButton(
+                onPressed: () => Navigator.pop(dialogContext, true), 
+                child: Text(t.remove),
+            )
+          ],
+        )
+      );
+      // Si el widget ya no está activo o no se confirmó
+      if(!mounted || confirmed != true) return;
+      // Si se confirmó, lo eliminamos
+      setState(() {
+        _favorites.remove(hero.id);
+      });
+    }
   }
   Future<void> _open(HeroItem hero) async {
     final changed = await Navigator.push<bool>(context, MaterialPageRoute(
